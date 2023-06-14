@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="RGB.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:RGB"
+    xmlns:views="clr-namespace:RGB.Views"
+    FlyoutBehavior="Disabled">
+
+    <ShellContent
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" x:Name="MainPage" />
+
+    <ShellContent
+        ContentTemplate="{DataTemplate views:TimerPage}"
+        Route="TimerPage" x:Name="TimerPage" />
+</Shell>

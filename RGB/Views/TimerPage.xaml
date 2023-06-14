@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RGB.Views.TimerPage"
+             xmlns:controls="clr-namespace:RGB.Util">
+    <VerticalStackLayout>
+        <Label 
+            Text="Timer Action"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            TextColor="White"/>
+
+        <CheckBox IsChecked="{Binding TimerEnabled}"/>
+        <Label>enabled</Label>
+        
+        <TimePicker Time="{Binding PickedTime}"/>
+        <controls:ColorPicker PickedColor="{Binding PickedColor}" MaximumWidthRequest="400" MinimumHeightRequest="400"/>
+        <Button Text="Submit" Command="{Binding SubmitCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

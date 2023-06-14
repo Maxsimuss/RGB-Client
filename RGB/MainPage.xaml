@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RGB.MainPage"
+             xmlns:local="clr-namespace:RGB"
+             xmlns:views="clr-namespace:RGB.Views"
+             xmlns:vm="clr-namespace:RGB.ViewModels"
+             xmlns:controls="clr-namespace:RGB.Util">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="colorTemplate">
+            <controls:ColorPicker PickedColor="{Binding Color}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+        </DataTemplate>
+        <DataTemplate x:Key="singleTemplate">
+            <VerticalStackLayout>
+                <Label Text="{Binding Name}" FontSize="Medium"></Label>
+                <Slider Maximum="{Binding Max}" Minimum="{Binding Min}" Value="{Binding Value}" Margin="0"></Slider>
+            </VerticalStackLayout>
+        </DataTemplate>
+        <views:SettingDataTemplateSelector 
+            x:Key="settingTemplateSelector" 
+            ColorSettingTemplate="{StaticResource colorTemplate}" 
+            SingleSettingTemplate="{StaticResource singleTemplate}"/>
+    </ContentPage.Resources>
+    
+    <Grid VerticalOptions="Fill">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- HEADER -->
+        <BoxView Grid.Row="0" Grid.Column="0" Color="#101010"/>
+        <Label Grid.Row="0" Grid.Column="0" Margin="20" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">RGB</Label>
+
+        <BoxView Grid.Row="0" Grid.Column="1" Color="#171717"/>
+        <Label Grid.Row="0" Grid.Column="1" Margin="20" FontSize="Title" VerticalTextAlignment="Center" Text="{Binding CurrentEffect.Name}"></Label>
+        <!-- /HEADER -->
+
+
+        <!-- SIDEBAR -->
+        <BoxView Grid.Row="1" Grid.Column="0" Color="#171717"/>
+        <Grid Grid.Row="1" Grid.Column="0" VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <Label Grid.Row="0" Margin="24,20" FontSize="Caption" Text="{Binding ConnectedDevicesMsg}"></Label>
+
+            <CollectionView Grid.Row="1" ItemsSource="{Binding Effects}" Margin="20,0" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <controls:CustomButton Command="{Binding SelectCurrentCommand}" Name="{Binding Name}"  Margin="0,0,0,8"/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" FontSize="Caption" BackgroundColor="#202020" TextColor="#FFFFFF" BorderColor="Transparent" Margin="20,10,10,10" Text="Timers" Command="{Binding TimerCommand}"></Button>
+                <Button Grid.Column="1" FontSize="Caption" BackgroundColor="#202020" TextColor="#FFFFFF" BorderColor="Transparent" Margin="10,10,20,10" Text="Refresh Devices" Command="{Binding RefreshCommand}"></Button>
+            </Grid>
+        </Grid>
+        <!-- /SIDEBAR -->
+
+        <!-- EFFECT SETTINGS -->
+        <BoxView Grid.Row="1" Grid.Column="1" Color="#202020"/>
+        <StackLayout
+            BindableLayout.ItemsSource="{Binding CurrentEffect.Settings}"
+            BindableLayout.ItemTemplateSelector="{StaticResource settingTemplateSelector}"
+            Grid.Row="1" 
+            Grid.Column="1" 
+            Margin="20">
+        </StackLayout>
+        <!-- /EFFECT SETTINGS -->
+    </Grid>
+</ContentPage>
